@@ -27,6 +27,7 @@ class pagerduty(
     ini_setting { 'pagerduty_puppet_reports':
       ensure  => present,
       path    => "${::facts['pd_puppet_conf_base']}/puppet.conf",
+      section => master,
       setting => reports,
       value   => $pagerduty_puppet_reports,
       notify  => Service['apache2'],
