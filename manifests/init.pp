@@ -1,4 +1,4 @@
-# Report processor integration with Pagerduty
+# Report processor integration with PagerDuty
 class pagerduty(
   $pagerduty_puppet_api        = 'SET ME',
   $pagerduty_puppet_reports    = '',
