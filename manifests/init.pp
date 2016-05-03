@@ -5,16 +5,6 @@ class pagerduty(
   $pagerduty_puppet_pluginsync = undef,
 ) {
 
-  package { 'redphone':
-    ensure   => installed,
-    provider => gem,
-  }
-
-  package { 'json':
-    ensure   => installed,
-    provider => gem,
-  }
-
   file { "${::facts['pd_puppet_conf_base']}/pagerduty.yaml":
     path    => "${::facts['pd_puppet_conf_base']}/pagerduty.yaml",
     owner   => root,

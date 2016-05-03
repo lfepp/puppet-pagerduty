@@ -11,6 +11,8 @@ in the `details` section of the API call.
 Installation & Usage
 -------------------
 
+1. Install dependencies on all Puppet master nodes: `/opt/puppetlabs/puppet/bin/gem install redphone json`
+
 1. Install puppet-pagerduty as a module in your Puppet master's module
     path.
 
