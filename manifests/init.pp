@@ -30,7 +30,6 @@ class pagerduty(
       section => master,
       setting => reports,
       value   => $pagerduty_puppet_reports,
-      notify  => Service['apache2'],
     }
   }
 
@@ -41,7 +40,6 @@ class pagerduty(
       section => main,
       setting => pluginsync,
       value   => $pagerduty_puppet_pluginsync,
-      notify  => Service['apache2'],
     }
   }
 
