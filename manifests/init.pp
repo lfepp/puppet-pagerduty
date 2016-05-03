@@ -15,8 +15,8 @@ class pagerduty(
     provider => gem,
   }
 
-  file { '/etc/puppet/pagerduty.yaml':
-    path    => '/etc/puppet/pagerduty.yaml',
+  file { "${::facts['pd_puppet_conf_base']}/pagerduty.yaml":
+    path    => "${::facts['pd_puppet_conf_base']}/pagerduty.yaml",
     owner   => root,
     group   => root,
     mode    => '0644',
@@ -26,9 +26,8 @@ class pagerduty(
   if $pagerduty_puppet_reports {
     ini_setting { 'pagerduty_puppet_reports':
       ensure  => present,
-      path    => '/etc/puppet/puppet.conf',
-      section => 'master',
-      setting => 'reports',
+      path    => "${::facts['pd_puppet_conf_base']}/puppet.conf",
+      setting => reports,
       value   => $pagerduty_puppet_reports,
       notify  => Service['apache2'],
     }
@@ -37,9 +36,9 @@ class pagerduty(
   if $pagerduty_puppet_pluginsync {
     ini_setting { 'pagerduty_puppet_pluginsync':
       ensure  => present,
-      path    => '/etc/puppet/puppet.conf',
-      section => 'main',
-      setting => 'pluginsync',
+      path    => "${::facts['pd_puppet_conf_base']}/puppet.conf",
+      section => main,
+      setting => pluginsync,
       value   => $pagerduty_puppet_pluginsync,
       notify  => Service['apache2'],
     }
