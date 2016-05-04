@@ -11,12 +11,14 @@ in the `details` section of the API call.
 Installation & Usage
 -------------------
 
-1. Install dependencies on all Puppet master nodes: `/opt/puppetlabs/puppet/bin/gem install redphone json`
+1. Install dependencies on all Puppet master nodes: `/opt/puppetlabs/server/bin/puppetserver gem install GEM_NAME`
 
-1. Install puppet-pagerduty as a module in your Puppet master's module
-    path.
+1. Manually install pagerduty.rb to /opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet/reports/
+   This is due to a [bug](https://tickets.puppetlabs.com/browse/SERVER-1014)
 
-1. You will need to create a Puppet specific service that uses the 
+1. Restart puppetserver service
+
+1. You will need to create a Puppet specific service that uses the
    Generic API in PagerDuty.
 
 1. Add the class to the puppet master node:
@@ -26,6 +28,7 @@ Installation & Usage
          }
 
 
+Not Madatory, it is the default since Puppet 3.0.0
 1. Enable pluginsync and reports on your master and clients in `puppet.conf`
 
    You can do it manually:
