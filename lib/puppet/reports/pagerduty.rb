@@ -28,7 +28,7 @@ Puppet::Reports.register_report(:pagerduty) do
     cache_file = "#{CACHE_DIR}/#{self.host}"
     if self.status == "failed"
       Puppet.debug "Sending status for #{self.host} to PagerDuty."
-      err_events = self.logs.select { |line| line.level == 'err' }.sort_by { |line| line.time }
+      err_events = Hash[*self.logs.select { |line| line.level == 'err' }.sort_by { |line| line.time }.map {|line| [line.time, line]}.flatten]
       response = Redphone::Pagerduty.trigger_incident(
         :service_key => PAGERDUTY_API,
         :incident_key => "puppet/#{self.host}",
