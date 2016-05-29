@@ -37,7 +37,7 @@ Puppet::Reports.register_report(:pagerduty) do
       response = Redphone::Pagerduty.trigger_incident(
         :service_key => PAGERDUTY_API,
         :incident_key => "puppet/#{self.host}",
-        :description => "Puppet run for #{self.host} #{self.status} at #{Time.now.asctime}",
+        :description => "#{self.environment.upcase} Puppet run for #{self.host} #{self.status} at #{Time.now.asctime}",
         :details => err_events
       )
       case response['status']
