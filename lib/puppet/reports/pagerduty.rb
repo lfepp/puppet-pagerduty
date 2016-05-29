@@ -14,6 +14,7 @@ Puppet::Reports.register_report(:pagerduty) do
   raise(Puppet::ParseError, "PagerDuty report config file #{config_file} not readable") unless File.exist?(config_file)
   config = YAML.load_file(config_file)
   PAGERDUTY_API = config[:pagerduty_api]
+  IGNORE_ENVS = [*config[:ignore_envs]]
   CACHE_DIR = File.join(Puppet.settings[:vardir], 'pagerduty-report-cache')
   if not File.directory?(CACHE_DIR)
     Dir.mkdir(CACHE_DIR)
@@ -25,6 +26,10 @@ Puppet::Reports.register_report(:pagerduty) do
   DESC
 
   def process
+    if ! IGNORE_ENVS.empty? && IGNORE_ENVS.include?(self.environment)
+      Puppet.debug "Ignoring report from #{self.host} environment #{self.environment}"
+      return
+    end
     cache_file = "#{CACHE_DIR}/#{self.host}"
     if self.status == "failed"
       Puppet.debug "Sending status for #{self.host} to PagerDuty."
