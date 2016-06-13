@@ -11,45 +11,52 @@ in the `details` section of the API call.
 Installation & Usage
 -------------------
 
-1. Install dependencies on all Puppet master nodes: `/opt/puppetlabs/server/bin/puppetserver gem install GEM_NAME`
+1. Install this module on your master node as `pagerduty`: `git submodule add git@github.com:PagerDuty/puppet-pagerduty.git /etc/puppetlabs/code/environments/production/modules/pagerduty`
 
-1. Manually install pagerduty.rb to /opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet/reports/
-   This is due to a [bug](https://tickets.puppetlabs.com/browse/SERVER-1014)
+1. Install the `puppetlabs-inifile` dependency: `/opt/puppetlabs/bin/puppet module install puppetlabs-inifile`
 
-1. Restart puppetserver service
+1. Install the gem dependencies on your master node:
+    * `/opt/puppetlabs/server/bin/puppetserver gem install puppet`
+    * `/opt/puppetlabs/server/bin/puppetserver gem install json`
+    * `/opt/puppetlabs/server/bin/puppetserver gem install redphone`
 
-1. You will need to create a Puppet specific service that uses the
-   Generic API in PagerDuty.
+1. Manually install pagerduty.rb to `/opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet/reports/` by copying the script into the directory.
+    This is due to the Puppet issue documented [here](https://tickets.puppetlabs.com/browse/SERVER-1014)
 
-1. Add the class to the puppet master node:
+1. Restart the `puppetserver` service
 
-         class { 'pagerduty':
-           pagerduty_puppet_api => 'YOUR PAGERDUTY API HERE',
-         }
+1. Create a Puppet specific service that uses the Puppet integration in PagerDuty
 
+1. Add the `pagerduty` class to your master node's main manifest:
 
-Not Madatory, it is the default since Puppet 3.0.0
-1. Enable pluginsync and reports on your master and clients in `puppet.conf`
+         class { 'pagerduty' }
 
-   You can do it manually:
+1. List `pagerduty` as a report handler on your master node in `puppet.conf`:
+
+         [master]
+         reports = pagerduty
+
+1. Enable pluginsync and reports on your master and client nodes if it is not already:
+
+    You can manually enable in `puppet.conf`:
 
          [master]
          report = true
-         reports = pagerduty
          pluginsync = true
          [agent]
          report = true
          pluginsync = true
 
-   Or use the class:
+    Or you can enable within the `pagerduty` class in your master node's manifest:
 
-         class { 'pagerduty':
-           pagerduty_puppet_api        => 'YOUR PAGERDUTY API HERE',
-           pagerduty_puppet_reports    => 'store,http,pagerduty',
-           pagerduty_puppet_pluginsync => 'true',
-         }
+        class { 'pagerduty':
+          pagerduty_puppet_reports    => 'store,http,pagerduty',
+          pagerduty_puppet_pluginsync => 'true',
+        }
 
-1. Run the Puppet client and sync the report as a plugin
+    **Note:** The step above is optional. These settings are `true` by default as of Puppet 3.0.0.
+
+1. Run the Puppet client and sync the report as a plugin: `/opt/puppetlabs/bin/puppet agent --test`
 
 Author
 ------
