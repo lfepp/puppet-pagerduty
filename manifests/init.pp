@@ -6,11 +6,11 @@ class pagerduty(
   $pagerduty_puppet_service    = undef,
 ) {
 
-  if ! defined(Service[$pagerduty_puppet_service]) {
-    service { $pagerduty_puppet_service :
-      ensure => running,
-    }
-  }
+  # if ! defined(Service[$pagerduty_puppet_service]) {
+  #   service { $pagerduty_puppet_service :
+  #     ensure => running,
+  #   }
+  # }
 
   file { "${::facts['pd_puppet_conf_base']}/pagerduty.yaml":
     path    => "${::facts['pd_puppet_conf_base']}/pagerduty.yaml",
