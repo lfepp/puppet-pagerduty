@@ -1,12 +1,12 @@
 {
-  "name": "jamtur01-pagerduty",
-  "version": "0.0.2",
+  "name": "pdsupport-pagerduty",
+  "version": "1.0.0",
   "author": "James Turnbull",
   "summary": "A Puppet report processor for sending alerts to Pagerduty.",
   "license": "Apache 2.0",
-  "source": "git://github.com/jamtur01/puppet-pagerduty.git",
-  "project_page": "https://github.com/jamtur01/puppet-pagerduty",
-  "issues_url": "https://github.com/jamtur01/puppet-pagerduty/issues",
+  "source": "git://github.com/pagerduty/puppet-pagerduty.git",
+  "project_page": "https://github.com/pagerduty/puppet-pagerduty",
+  "issues_url": "https://github.com/pagerduty/puppet-pagerduty/issues",
   "description": "A Puppet report processor for sending alerts to Pagerduty.",
   "dependencies": [
       {
