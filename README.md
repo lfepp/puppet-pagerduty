@@ -11,9 +11,7 @@ in the `details` section of the API call.
 Installation & Usage
 -------------------
 
-1. Install this module on your master node as `pagerduty`: `git submodule add git@github.com:PagerDuty/puppet-pagerduty.git /etc/puppetlabs/code/environments/production/modules/pagerduty`
-
-1. Install the `puppetlabs-inifile` dependency: `/opt/puppetlabs/bin/puppet module install puppetlabs-inifile`
+1. Install this module on your master node: `/opt/puppetlabs/bin/puppet module install pdsupport-pagerduty`
 
 1. Install the gem dependencies on your master node:
     * `/opt/puppetlabs/server/bin/puppetserver gem install puppet`
