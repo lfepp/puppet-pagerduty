@@ -54,6 +54,23 @@ Installation & Usage
 
 1. Restart the `puppetserver` service
 
+1. Move the `pagerduty.yaml.erb` template into your master node's `confdir` and rename the file `pagerduty.yaml`
+
+        mv /etc/puppetlabs/code/environments/production/modules/pagerduty/templates/pagerduty.yaml.erb /etc/puppetlabs/puppet/pagerduty.yaml
+
+1. Edit your `pagerduty.yaml` file and add your Puppet service's integration key from PagerDuty
+
+        ---
+        :pagerduty_api: 'INSERT_INTEGRATION_KEY_HERE'
+
+1. To test that a failed run will trigger a PagerDuty incident, edit the pagerduty module’s `init.pp` manifest and uncomment lines 9-13
+
+        if ! defined(Service[$pagerduty_puppet_service]) {
+          service { $pagerduty_puppet_service :
+            ensure => running,
+          }
+        }
+
 1. Run the Puppet client and sync the report as a plugin: `/opt/puppetlabs/bin/puppet agent --test`
 
 Author
