@@ -21,13 +21,11 @@ Installation & Usage
 1. Manually install pagerduty.rb to `/opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet/reports/` by copying the script into the directory.
     This is due to the Puppet issue documented [here](https://tickets.puppetlabs.com/browse/SERVER-1014)
 
-1. Restart the `puppetserver` service
-
 1. Create a Puppet specific service that uses the Puppet integration in PagerDuty
 
 1. Add the `pagerduty` class to your master node's main manifest:
 
-         class { 'pagerduty' }
+         class { 'pagerduty': }
 
 1. List `pagerduty` as a report handler on your master node in `puppet.conf`:
 
@@ -53,6 +51,8 @@ Installation & Usage
         }
 
     **Note:** The step above is optional. These settings are `true` by default as of Puppet 3.0.0.
+
+1. Restart the `puppetserver` service
 
 1. Run the Puppet client and sync the report as a plugin: `/opt/puppetlabs/bin/puppet agent --test`
 
